@@ -1,5 +1,5 @@
 {
-  "name": "appengine-websockets",
+  "name": "game-session-socket-app-engine",
   "description": "Node.js websockets sample for Google App Engine",
   "version": "0.0.1",
   "private": true,
