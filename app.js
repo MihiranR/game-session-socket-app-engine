@@ -32,7 +32,7 @@ wss.on('connection', function connection(ws) {
 
   ws.on('message', function incoming(message) {
     count++;
-    console.log('received: %s', message);
+    //console.log('received: %s', message);
 
     const doRespond = count%5==0;
 
