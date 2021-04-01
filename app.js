@@ -32,10 +32,7 @@ const wss = new WebSocket.Server({ server });
 
 wss.on('connection', function connection(ws) {
   var count = 0;
-  const pubSubClient = new PubSub({
-    projectId: 'et-eng-cicd-env-build-pipeline',
-    keyFilename: '/Projects/GamingRnD/App Engine/game-session-socket-app-engine/secrets/et-eng-cicd-env-build-pipeline-d771ac2d3e65.json'
-  });
+  const pubSubClient = new PubSub();
   const topicName = 'projects/et-eng-cicd-env-build-pipeline/topics/game-session-stream-1';
 
   ws.on('message', function incoming(message) {
