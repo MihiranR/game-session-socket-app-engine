@@ -19,10 +19,15 @@ const app = require('express')();
 const { PubSub } = require('@google-cloud/pubsub');
 const { BigQuery } = require('@google-cloud/bigquery');
 //app.set('view engine', 'pug');
-
-const server = require('http').Server(app);
-
+const fs = require('fs');
+const https = require('https');
 const WebSocket = require('ws');
+
+const server = https.createServer({
+  cert: fs.readFileSync('./secrets/certificate.crt', 'utf8'),
+  key: fs.readFileSync('./secrets/key.pem', 'utf8')
+},app);
+// const server = https.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', function connection(ws) {
@@ -62,7 +67,10 @@ async function queryScores(ws,sessionId) {
   // Queries a public Stack Overflow dataset.
 
   // Create a client
-  const bigqueryClient = new BigQuery();
+  const bigqueryClient = new BigQuery({
+    projectId: 'et-eng-cicd-env-build-pipeline',
+    keyFilename: '/Projects/GamingRnD/App Engine/game-session-socket-app-engine/secrets/et-eng-cicd-env-build-pipeline-d771ac2d3e65.json'
+  });
 
   // The SQL query to run
   const sqlQuery = `SELECT action, COUNT(*)/SUM(COUNT(*)) OVER () AS ratio FROM \`et-eng-cicd-env-build-pipeline.gameAnalyticsDataset1.game-session-analytics-1\` WHERE sessionId=@sessionId GROUP BY action`;
