@@ -20,14 +20,14 @@ const { PubSub } = require('@google-cloud/pubsub');
 const { BigQuery } = require('@google-cloud/bigquery');
 //app.set('view engine', 'pug');
 const fs = require('fs');
-const https = require('http');
+const https = require('https');
 const WebSocket = require('ws');
 
-// const server = https.createServer({
-//   cert: fs.readFileSync('./secrets/certificate.crt', 'utf8'),
-//   key: fs.readFileSync('./secrets/key.pem', 'utf8')
-// },app);
-const server = https.createServer(app);
+const server = https.createServer({
+  cert: fs.readFileSync('./secrets/cert.pem', 'utf8'),
+  key: fs.readFileSync('./secrets/key.pem', 'utf8')
+},app);
+//const server = https.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', function connection(ws) {
