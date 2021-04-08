@@ -67,10 +67,7 @@ async function queryScores(ws,sessionId) {
   // Queries a public Stack Overflow dataset.
 
   // Create a client
-  const bigqueryClient = new BigQuery({
-    projectId: 'et-eng-cicd-env-build-pipeline',
-    keyFilename: '/Projects/GamingRnD/App Engine/game-session-socket-app-engine/secrets/et-eng-cicd-env-build-pipeline-d771ac2d3e65.json'
-  });
+  const bigqueryClient = new BigQuery();
 
   // The SQL query to run
   const sqlQuery = `SELECT action, COUNT(*)/SUM(COUNT(*)) OVER () AS ratio FROM \`et-eng-cicd-env-build-pipeline.gameAnalyticsDataset1.game-session-analytics-1\` WHERE sessionId=@sessionId GROUP BY action`;
